@@ -1,0 +1,4 @@
+librosa
+pyserial
+numpy
+tqdm
