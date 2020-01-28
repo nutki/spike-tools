@@ -3,7 +3,7 @@ Utilities for experimenting with Lego Spike Hub
 
 To install dependencies
 ```sh
-pip3 install -r requirements
+pip3 install -r requirements.txt
 ```
 
 ## cp.py
