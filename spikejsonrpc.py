@@ -115,14 +115,11 @@ if __name__ == "__main__":
     slots = info['slots']
     print("%2s %-40s %6s %6s %20s" % ("#", "Name", "Size", "Id", "Last Modified"))
     for i in range(20):
-      if not str(i) in slots:
-        print("%2s" % i)
-      else:
+      if str(i) in slots:
         sl = slots[str(i)]
         modified = datetime.utcfromtimestamp(sl['modified']/1000).strftime('%Y-%m-%d %H:%M:%S')
         print("%2s %-40s %5db %6s %20s" % (i, sl['name'], sl['size'], sl['id'], modified))
-    print("%s/%s%s Free" % (storage['total'], storage['free'], storage['unit']))
-    pass
+    print(("%s/%s%s Free" % (storage['free'], storage['total'], storage['unit'])).rjust(78))
   def handle_fwinfo():
     info = rpc.get_firmware_info()
     fw = '.'.join(str(x) for x in info['version'])
