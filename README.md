@@ -36,8 +36,8 @@ positional arguments:
     mv                  Changes program slot
     upload (cp)         Uploads a program
     rm                  Removes the program at a given slot
-    start (cp)          Starts a program
-    stop (cp)           Stop program execution
+    start               Starts a program
+    stop                Stop program execution
     display             Displays image on the LED matrix
 
 optional arguments:

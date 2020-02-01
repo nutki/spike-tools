@@ -171,11 +171,11 @@ if __name__ == "__main__":
   rmprogram_parser.add_argument('from_slot', type=int)
   rmprogram_parser.set_defaults(func=lambda: rpc.remove_project(args.from_slot))
 
-  startprogram_parser = sub_parsers.add_parser('start', aliases=['cp'], help='Starts a program')
+  startprogram_parser = sub_parsers.add_parser('start', help='Starts a program')
   startprogram_parser.add_argument('slot', type=int)
   startprogram_parser.set_defaults(func=lambda: rpc.program_execute(args.slot))
 
-  stopprogram_parser = sub_parsers.add_parser('stop', aliases=['cp'], help='Stop program execution')
+  stopprogram_parser = sub_parsers.add_parser('stop', help='Stop program execution')
   stopprogram_parser.set_defaults(func=lambda: rpc.program_terminate())
 
   display_parser = sub_parsers.add_parser('display', help='Displays image on the LED matrix')
