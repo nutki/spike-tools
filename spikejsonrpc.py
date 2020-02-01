@@ -84,6 +84,9 @@ class RPC:
   def move_project(self, from_slot, to_slot):
     return self.send_message('move_project', {'old_slotid': from_slot, 'new_slotid': to_slot})
 
+  def remove_project(self, from_slot):
+    return self.send_message('remove_project', {'slotid': from_slot })
+
 # Light Methods
   def display_set_pixel(self, x, y, brightness = 9):
     return self.send_message('scratch.display_set_pixel', { 'x':x, 'y': y, 'brightness': brightness})
@@ -158,11 +161,19 @@ if __name__ == "__main__":
   mvprogram_parser.add_argument('to_slot', type=int)
   mvprogram_parser.set_defaults(func=lambda: rpc.move_project(args.from_slot, args.to_slot))
 
-  mvprogram_parser = sub_parsers.add_parser('upload', aliases=['cp'], help='Uploads a program')
-  mvprogram_parser.add_argument('file')
-  mvprogram_parser.add_argument('to_slot', type=int)
-  mvprogram_parser.add_argument('name', nargs='?')
-  mvprogram_parser.set_defaults(func=handle_upload)
+  cpprogram_parser = sub_parsers.add_parser('upload', aliases=['cp'], help='Uploads a program')
+  cpprogram_parser.add_argument('file')
+  cpprogram_parser.add_argument('to_slot', type=int)
+  cpprogram_parser.add_argument('name', nargs='?')
+  cpprogram_parser.set_defaults(func=handle_upload)
+
+  rmprogram_parser = sub_parsers.add_parser('rm', help='Removes the program at a given slot')
+  rmprogram_parser.add_argument('from_slot', type=int)
+  rmprogram_parser.set_defaults(func=lambda: rpc.remove_project(args.from_slot))
+
+  display_parser = sub_parsers.add_parser('display', help='Displays image on the LED matrix')
+  display_parser.add_argument('image')
+  display_parser.set_defaults(func=lambda: rpc.display_image(args.image))
 
   args = parser.parse_args()
   if args.debug:
