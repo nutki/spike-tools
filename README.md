@@ -48,6 +48,13 @@ optional arguments:
   --debug               Enable debug
 ```
 
+The programs launched with the default launcher need to be expressed in coroutines so they can be
+exited properly. `hub/program_template.py` is an example skeleton program handling initialization.
+It can be uploaded with:
+```sh
+sudo ./spikejsonrpc.py upload hub/program_template.py 19
+```
+
 ## cp.py
 Copy a file to the hub filesystem.
 ```
