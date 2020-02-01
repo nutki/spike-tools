@@ -175,9 +175,26 @@ if __name__ == "__main__":
   stopprogram_parser = sub_parsers.add_parser('stop', help='Stop program execution')
   stopprogram_parser.set_defaults(func=lambda: rpc.program_terminate())
 
-  display_parser = sub_parsers.add_parser('display', help='Displays image on the LED matrix')
-  display_parser.add_argument('image')
-  display_parser.set_defaults(func=lambda: rpc.display_image(args.image))
+  display_parser = sub_parsers.add_parser('display', help='Controls 5x5 LED matrix display')
+  display_parser.set_defaults(func=lambda: display_parser.print_help())
+  display_parsers = display_parser.add_subparsers()
+
+  display_image_parser = display_parsers.add_parser('image', help='Displays image on the LED matrix')
+  display_image_parser.add_argument('image', help='format xxxxx:xxxxx:xxxxx:xxxxx:xxxx, where x is the pixel brigthness in range 0-9')
+  display_image_parser.set_defaults(func=lambda: rpc.display_image(args.image))
+
+  display_text_parser = display_parsers.add_parser('text', help='Displays scrolling text on the LED matrix')
+  display_text_parser.add_argument('text')
+  display_text_parser.set_defaults(func=lambda: rpc.display_text(args.text))
+
+  display_clear_parser = display_parsers.add_parser('clear', help='Clears display')
+  display_clear_parser.set_defaults(func=lambda: rpc.display_clear())
+
+  display_pixel_parser = display_parsers.add_parser('setpixel', help='Sets individual LED brightness')
+  display_pixel_parser.add_argument('x', type=int)
+  display_pixel_parser.add_argument('y', type=int)
+  display_pixel_parser.add_argument('brightness', nargs='?', type=int, default=9, help='pixel brightness 0-9')
+  display_pixel_parser.set_defaults(func=lambda: rpc.display_set_pixel(args.x, args.y, args.brightness))
 
   args = parser.parse_args()
   if args.debug:
