@@ -30,7 +30,7 @@ class RPC:
         result = self.recv_buf[:pos]
         self.recv_buf = self.recv_buf[pos+1:]
         try:
-          return json.loads(result)
+          return json.loads(result.decode('utf-8'))
         except json.JSONDecodeError:
           logging.debug("Cannot parse JSON: %s" % result)
       c = self.ser.in_waiting
