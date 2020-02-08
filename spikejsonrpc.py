@@ -139,7 +139,8 @@ if __name__ == "__main__":
           rpc.write_package(b, id)
           pbar.update(len(b))
           b = f.read(bs)
-
+      if args.start:
+        rpc.program_execute(args.to_slot)
 
   parser = argparse.ArgumentParser(description='Tools for Spike Hub RPC protocol')
   parser.add_argument('-t', '--tty', help='Spike Hub device path', default='/dev/ttyACM0')
@@ -162,6 +163,7 @@ if __name__ == "__main__":
   cpprogram_parser.add_argument('file')
   cpprogram_parser.add_argument('to_slot', type=int)
   cpprogram_parser.add_argument('name', nargs='?')
+  cpprogram_parser.add_argument('--start', '-s', help='Start after upload', action='store_true')
   cpprogram_parser.set_defaults(func=handle_upload)
 
   rmprogram_parser = sub_parsers.add_parser('rm', help='Removes the program at a given slot')
