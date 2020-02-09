@@ -34,7 +34,7 @@ class RPC:
         except json.JSONDecodeError:
           logging.debug("Cannot parse JSON: %s" % result)
       c = self.ser.in_waiting
-      if c == 0 and elapsed > timeout:
+      if c == 0 and elapsed >= timeout:
         break
       self.ser.timeout = 1 - timeout
       self.recv_buf = self.recv_buf + self.ser.read(c if c else 1)
